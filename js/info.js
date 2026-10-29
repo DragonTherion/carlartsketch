@@ -10,15 +10,15 @@ T.fileOf = w => {
   try { const p = new URL(u, location.href).pathname.split('/').pop(); return decodeURIComponent(p) || '—'; } catch (e) { return u.split(/[?#]/)[0].split('/').pop() || '—'; }
 };
 T.numOf = w => {
-  if (w.num) return w.num;
-  const all = [...T.DB.works].sort((a, b) => a.created - b.created), i = all.findIndex(x => x.id === w.id);
-  return 'N.º ' + pad(i >= 0 ? i + 1 : all.length + 1);
+  /* El número depende del orden de subida (posición real en la galería), no de un valor guardado */
+  const i = T.DB.works.findIndex(x => x.id === w.id);
+  return 'N.º ' + pad(i >= 0 ? i + 1 : T.DB.works.length + 1);
 };
 T.copyOf = w => {
   const y = w.year || new Date(w.created || Date.now()).getFullYear();
   return String(T.DB.site.copy || '© {AÑO} CARL ART SKETCH. Todos los derechos reservados.').replace(/\{AÑO\}/g, y);
 };
-T.nextNum = () => { const mx = Math.max(0, ...T.DB.works.map(x => parseInt(String(x.num || '').replace(/\D/g, ''), 10) || 0), T.DB.works.length); return 'N.º ' + pad(mx + 1); };
+T.nextNum = () => 'N.º ' + pad(T.DB.works.length + 1);
 T.fmtKb = b => b > 0 ? (b < 102400 ? (b / 1024).toFixed(1) : Math.round(b / 1024)) + ' kb' : '—';
 T.fmtDim = d => d || '—';
 

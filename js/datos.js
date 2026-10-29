@@ -9,6 +9,10 @@ const base = () => ({ updated: 0, site: { title: 'CARL ART SKETCHES', sub: '', c
 const paletaOk = a => Array.isArray(a) ? a.filter(x => x && /^#[0-9a-f]{6}$/i.test(x.c)).slice(0, 8).map(x => ({ c: x.c.toLowerCase(), p: Math.min(100, Math.max(1, Number(x.p) || 1)) })) : [];
 const lista = a => Array.isArray(a) ? a.map(x => String(x).trim().slice(0, 60)).filter(Boolean).slice(0, 12) : [];
 
+/* N.º de dibujo: la posición en el orden de subida, siempre con 3 dígitos (001, 002, … 015) */
+const pad3 = n => String(n).padStart(3, '0');
+const numerar = works => { (works || []).forEach((w, i) => { w.num = 'N.º ' + pad3(i + 1); }); return works; };
+
 /* Valida y limpia cualquier objeto de datos (archivo publicado, borrador o respaldo) */
 function normalizar(o) {
   const d = base(); if (!o || typeof o !== 'object') return d;
@@ -29,22 +33,29 @@ function normalizar(o) {
     id: String(w.id || uid()).slice(0, 40),
     title: String(w.title || '').slice(0, 200), desc: String(w.desc || '').slice(0, 2000),
     img: String(w.img || '').slice(0, 20000000),
-    year: String(w.year || '').trim().slice(0, 12), paper: String(w.paper || '').trim().slice(0, 120), cats: lista(w.cats), techs: lista(w.techs), palette: paletaOk(w.palette),
+    year: String(w.year || '').trim().slice(0, 12), paper: String(w.paper || '').trim().slice(0, 120), cats: lista(w.cats), techs: lista(w.techs).map(t => t === 'SCUMBLING' ? 'CIRCULARISMO' : t), palette: paletaOk(w.palette),
     file: String(w.file || '').trim().slice(0, 160), num: String(w.num || '').trim().slice(0, 24), copy: String(w.copy || '').trim().slice(0, 200), dim: String(w.dim || '').slice(0, 30), kb: Math.max(0, Number(w.kb) || 0),
     insignia: w.insignia === 'dorada' ? 'dorada' : 'normal',
     premium: !!w.premium, fit: w.fit === 'contain' ? 'contain' : 'cover',
     created: Number(w.created) || Date.now()
   }));
+  numerar(d.works);
   return d;
 }
 
 /* Opciones de las etiquetas (editables en data/opciones.json; estos valores son el respaldo) */
 T.OPC = {
-  papel: ['Canson XL Bristol A4 21 x 29,7 cm 160 g', 'Canson XL Mix Media 17,8 x 25,4 cm 160 g'],
+  papel: [
+    'Canson XL Bristol A4 21 x 29,7 cm 160 g',
+    'Canson XL Mix Media 17,8 x 25,4 cm 160 g',
+    'Genérico - A5 148 x 210 mm 160 g',
+    'Genérico - B5 - 176 x 250 mm 160 g',
+    'Genérico - CARTA - 216 x 279 mm 160 g'
+  ],
   categoria: ['LÁPICES', 'COLORES', 'BOLÍGRAFOS', 'ESTILÓGRAFOS', 'MARCADORES'],
-  tecnicas: ['TRAMADO', 'ACHURADO', 'PUNTILLISMO', 'PERSPECTIVA', 'DIFUMADO', 'CLAROSCURO', 'SCUMBLING']
+  tecnicas: ['TRAMADO', 'ACHURADO', 'PUNTILLISMO', 'PERSPECTIVA', 'DIFUMADO', 'CLAROSCURO', 'CIRCULARISMO', 'RAYADO', 'ENMASCARAMIENTO', 'LÍNEA DE CONTORNO', 'ESGRAFIADO']
 };
-T.LS = LS; T.SS = SS; T.normalizar = normalizar;
+T.LS = LS; T.SS = SS; T.normalizar = normalizar; T.numerar = numerar;
 T.DB = base(); T.pubUpdated = 0; T.admin = false;
 
 /* Carga: data/obras.json (público) y, si es más reciente, el borrador del navegador del administrador */
@@ -62,6 +73,7 @@ T.cargar = async function () {
 };
 
 T.persist = function () {
+  numerar(T.DB.works);
   T.DB.updated = Date.now();
   try { localStorage.setItem(LS, JSON.stringify(T.DB)); } catch (e) { toast('No se pudo guardar el borrador (¿archivos muy pesados?). Usa URLs o la carpeta img/.'); }
   if (T.onPersist) T.onPersist();

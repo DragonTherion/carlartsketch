@@ -10,8 +10,8 @@
 
 .btn{white-space:nowrap;font-family:var(--disp);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:.75em 1.3em;border-radius:6px;border:1px solid var(--line);background:rgba(var(--acc-rgb),.07);color:var(--acc2);cursor:pointer;transition:.2s}
 .btn:hover{background:rgba(var(--acc-rgb),.18);border-color:var(--acc)}
-.btn.main{background:var(--acc2);color:var(--ink);border-color:var(--acc2);font-weight:700}
-.btn.main:hover{filter:brightness(1.15)}
+.btn.main{background:var(--panel1);color:var(--acc2);border-color:var(--acc2);font-weight:700;box-shadow:0 8px 20px -14px var(--sh2)}
+.btn.main:hover{background:rgba(var(--acc-rgb),.14);border-color:var(--acc2);filter:none}
 .btn.danger{border-color:rgba(var(--acc-rgb),.45);color:var(--err)}
 .btn.danger.arm{background:var(--err);color:#fff;border-color:var(--err)}
 .btn.mini{margin-top:10px;padding:.55em 1.1em;font-size:10px}
@@ -83,7 +83,6 @@
 .row2 .sw{padding:9px 12px;gap:10px;min-height:44px}.row2 .sw span.t{font-size:10px;letter-spacing:.14em;line-height:1.3}.row2 .sw .tr{flex-basis:42px}
 .row2 select{text-overflow:ellipsis}
 @media (max-width:520px){.row2{grid-template-columns:1fr}.row2.r-ty{grid-template-columns:1fr 100px}}
-
 /* el interruptor es un <label> dentro de .fld: que no herede el estilo de las etiquetas de campo */
 .fld label.sw{display:flex;margin:0;font-size:inherit;letter-spacing:normal;color:inherit}
 

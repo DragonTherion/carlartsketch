@@ -33,6 +33,7 @@ function enterAdmin() { T.admin = true; try { sessionStorage.setItem(T.SS, '1');
 function exitAdmin() { closeMenu(); T.admin = false; try { sessionStorage.removeItem(T.SS); } catch (e) {} if (bar) { bar.remove(); bar = null; } document.body.classList.remove('is-admin'); closeModals(); T.render(); }
 function buildBar() {
   if (bar) bar.remove(); document.body.classList.add('is-admin');
+  if (T.proteccionLimpiar) T.proteccionLimpiar();
   menuBtn = h('button', { class: 'btn ibtn only', type: 'button', title: 'Respaldo y restauración', 'aria-label': 'Respaldo y restauración', 'aria-haspopup': 'menu', 'aria-expanded': 'false', onclick: toggleMenu }, icon(ICO_DATOS), icon(ICO_CARET));
   pubBtn = h('button', { class: 'btn' + (T.sinPublicar() ? ' pend' : ''), title: 'Descarga data/obras.json para publicar los cambios', onclick: T.publicar }, 'PUBLICAR');
   bar = h('div', { class: 'abar' },
@@ -178,7 +179,7 @@ function editor(orig) {
   drawPal();
   const year = h('input', { type: 'text', inputmode: 'numeric', maxlength: '12', placeholder: 'Ej. 2025', value: m.year, autocomplete: 'off' }); year.addEventListener('input', () => { m.year = year.value.trim(); });
   const title = h('input', { type: 'text', placeholder: 'Nombre de la obra', value: m.title, autocomplete: 'off' }); title.addEventListener('input', () => { m.title = title.value; });
-  const desc = h('textarea', { placeholder: 'Técnica, año, notas… (opcional)' }); desc.value = m.desc; desc.addEventListener('input', () => { m.desc = desc.value; });
+  const desc = h('textarea', { placeholder: 'Información ó descripción de la carta' }); desc.value = m.desc; desc.addEventListener('input', () => { m.desc = desc.value; });
   /* insignia: estándar (normal) o dorada */
   const insig = h('div', { class: 'insgs', role: 'radiogroup', 'aria-label': 'Insignia' });
   const drawInsig = () => insig.replaceChildren(...[['normal', 'Insignia estándar'], ['dorada', 'Insignia dorada']].map(([k, nm]) => {
@@ -202,7 +203,7 @@ function editor(orig) {
     m.title = title.value.trim(); m.desc = desc.value.trim();
     if (!safeUrl(m.img)) { msg.className = 'msg'; msg.textContent = 'Primero indica la imagen de la obra.'; return; }
     exp.disabled = true; exp.textContent = 'EXPORTANDO…'; msg.textContent = '';
-    try { await T.exportarCarta(m, isNew); toast('Se descargaron FRENTE y ATRÁS (PNG).'); }
+    try { await T.exportarCarta(m); toast('Se descargaron FRENTE y ATRÁS (PNG).'); }
     catch (e) { msg.className = 'msg'; msg.textContent = 'No se pudo exportar: la imagen es de otro sitio y no lo permite. Cópiala a la carpeta img/ o súbela con el botón ARCHIVO.'; }
     exp.disabled = false; exp.textContent = 'EXPORTAR';
   };
@@ -217,7 +218,8 @@ function editor(orig) {
   }
   const pDatos = h('div', { class: 'tabp' }, h('div', { class: 'row2 r-ty' }, h('div', { class: 'fld' }, h('label', null, 'TÍTULO'), title), h('div', { class: 'fld' }, h('label', null, 'AÑO'), year)), h('div', { class: 'fld' }, h('label', null, 'DESCRIPCIÓN'), desc),
       urlField('URL DE IMAGEN', 'img', 'https://…/mi-boceto.jpg  ·  o  img/mi-boceto.jpg'),
-      h('div', { class: 'fld' }, h('label', null, 'PALETA DE COLORES'), palBox, palMsg, h('button', { class: 'btn mini', type: 'button', onclick: calcPal }, 'RECALCULAR')),
+      h('div', { class: 'fld' }, h('label', null, 'PALETA DE COLORES'), palBox, palMsg),
+      h('button', { class: 'btn mini', type: 'button', onclick: calcPal }, 'RECALCULAR'),
       h('div', { class: 'row2' }, h('div', { class: 'fld' }, h('label', null, 'INSIGNIA'), insig), h('div', { class: 'fld' }, h('label', null, '\u00a0'), sw)));
   const pMat = h('div', { class: 'tabp' }, chipField('PAPEL', 'paper', T.OPC.papel, true), chipField('CATEGORÍA', 'cats', T.OPC.categoria, false), chipField('TÉCNICAS', 'techs', T.OPC.tecnicas, false));
   const tabs = [['DATOS', pDatos], ['MATERIALES', pMat]].map(([n, pn], i) => { const b = h('button', { type: 'button', class: 'tab', role: 'tab' }, n); b.onclick = () => sel(i); b._p = pn; return b; });

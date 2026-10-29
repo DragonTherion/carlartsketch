@@ -107,10 +107,10 @@ const save = (blob, name) => { const a = T.h('a', { href: URL.createObjectURL(bl
 const slug = s => String(s || 'carta').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 50) || 'carta';
 
 /* w: obra (puede ser un borrador del editor). Descarga «<título>-FRENTE.png» y «<título>-ATRAS.png». */
-T.exportarCarta = async function (w, isNew) {
+T.exportarCarta = async function (w) {
   if (document.fonts && document.fonts.ready) await document.fonts.ready;
   const r = T.safeUrl(w.img) ? await T.infoImg(w) : { dim: '', bytes: 0 };
-  const info = { file: T.fileOf(w), num: w.num || (isNew ? T.nextNum() : T.numOf(w)), dim: T.fmtDim(w.dim || r.dim), kb: w.kb ? T.fmtKb(w.kb * 1024) : T.fmtKb(r.bytes), copy: T.copyOf(w) };
+  const info = { file: T.fileOf(w), num: T.numOf(w), dim: T.fmtDim(w.dim || r.dim), kb: w.kb ? T.fmtKb(w.kb * 1024) : T.fmtKb(r.bytes), copy: T.copyOf(w) };
   const full = Object.assign({}, w); if (!(full.palette && full.palette.length) && T.safeUrl(w.img)) { try { full.palette = (await T.extraerPaleta(w.img)) || []; } catch (e) {} }
   const base = slug(w.title);
   const f = await toBlob(await frente(full)); save(f, base + '-FRENTE.png');
