@@ -1,9 +1,62 @@
 {
-  "updated": 0,
-  "site": {
-    "title": "CARL ART SKETCHES",
-    "sub": ""
-  },
-  "auth": null,
-  "works": []
+ "updated": 1793257385430,
+ "site": {
+  "title": "CARL ART SKETCHES",
+  "sub": "",
+  "copy": ""
+ },
+ "auth": null,
+ "works": [
+  {
+   "id": "mvt73wlpdf7yy",
+   "title": "Geometría",
+   "desc": "Espacio geométrico",
+   "img": "https://live.staticflickr.com/65535/55616518740_75074734a1_z.jpg",
+   "year": "2025",
+   "paper": "Genérico - A5 148 x 210 mm 160 g",
+   "cats": [
+    "ESTILÓGRAFOS"
+   ],
+   "techs": [
+    "PERSPECTIVA",
+    "CIRCULARISMO",
+    "RAYADO"
+   ],
+   "palette": [
+    {
+     "c": "#474c4c",
+     "p": 29
+    },
+    {
+     "c": "#5b5d5b",
+     "p": 14
+    },
+    {
+     "c": "#6b6d6a",
+     "p": 14
+    },
+    {
+     "c": "#7f807b",
+     "p": 14
+    },
+    {
+     "c": "#989993",
+     "p": 14
+    },
+    {
+     "c": "#b9bab2",
+     "p": 14
+    }
+   ],
+   "file": "55616518740_75074734a1_z.jpg",
+   "num": "N.º 001",
+   "dim": "479 × 640 px",
+   "kb": 161,
+   "insignia": "normal",
+   "premium": false,
+   "fit": "cover",
+   "created": 1793257321165,
+   "copy": ""
+  }
+ ]
 }
