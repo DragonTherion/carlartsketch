@@ -1,8 +1,9 @@
-/* Galería: tarjetas con marco TCG, inclinación y foil al pasar el puntero */
+/* Galería: tarjetas con marco TCG, inclinación, reflejo satinado y foil al pasar el puntero */
 (function (T) {
 'use strict';
 const { $, h, clamp, mkImg } = T;
 const act = new Map(); let gridRAF = 0, gprev = 0;
+const RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches);
 const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('vis', e.isIntersecting)), { rootMargin: '80px' }) : null;
 
 function cardEl(w, preview) {
@@ -11,22 +12,24 @@ function cardEl(w, preview) {
   const card = h('div', { class: 'card' + (prem ? ' prem' : ''), tabindex: preview ? -1 : 0, role: 'button', 'aria-label': 'Abrir ' + (w.title || 'obra') }, art, T.marco(), T.insignia(w.insignia));
   let shine = null;
   if (prem) { shine = h('div', { class: 'shine' }, ...T.shineKids()); card.append(shine, h('i', { class: 'rim' })); card.style.setProperty('--dl', (-Math.random() * 10).toFixed(2) + 's'); }
+  /* reflejo satinado: el mismo del visor, sigue la inclinación de la miniatura */
+  const gloss = prem ? null : h('i', { class: 'gloss', 'aria-hidden': 'true' }); if (gloss) card.append(gloss);
   const persp = h('div', { class: 'persp' }, card);
-  if (prem) {
-    const s = { card, shine, persp, tx: 0, ty: 0, sx: 0, sy: 0, vx: 0, vy: 0, hover: false, cv: null, ctx: null, gl: T.makeGlitter(Math.random() * 1e6 | 0) };
-    const move = e => {
-      if (e.pointerType === 'touch' && !s.hover && e.buttons === 0) return;
-      const r = persp.getBoundingClientRect();
-      s.tx = clamp(((e.clientX - r.left) / r.width - .5) * 2, -1, 1); s.ty = clamp(((e.clientY - r.top) / r.height - .5) * 2, -1, 1);
-      if (!s.hover) { s.hover = true; card.classList.add('act'); if (!s.cv) { s.cv = h('canvas'); shine.append(s.cv); s.ctx = s.cv.getContext('2d'); } T.sizeCanvas(s.cv, shine); }
-      act.set(card, s); if (!gridRAF) { gprev = performance.now(); gridRAF = requestAnimationFrame(gridLoop); }
-    };
-    const leave = () => { s.tx = 0; s.ty = 0; s.hover = false; };
+  const s = { card, shine, gloss, persp, tx: 0, ty: 0, sx: 0, sy: 0, vx: 0, vy: 0, hover: false, cv: null, ctx: null, gl: prem ? T.makeGlitter(Math.random() * 1e6 | 0) : null };
+  const move = e => {
+    if (e.pointerType === 'touch' && !s.hover && e.buttons === 0) return;
+    const r = persp.getBoundingClientRect();
+    s.tx = clamp(((e.clientX - r.left) / r.width - .5) * 2, -1, 1); s.ty = clamp(((e.clientY - r.top) / r.height - .5) * 2, -1, 1);
+    if (!s.hover) { s.hover = true; card.classList.add('act'); if (shine && !s.cv) { s.cv = h('canvas'); shine.append(s.cv); s.ctx = s.cv.getContext('2d'); } if (s.cv) T.sizeCanvas(s.cv, shine); }
+    act.set(card, s); if (!gridRAF) { gprev = performance.now(); gridRAF = requestAnimationFrame(gridLoop); }
+  };
+  const leave = () => { s.tx = 0; s.ty = 0; s.hover = false; };
+  if (!RM) {
     persp.addEventListener('pointermove', move); persp.addEventListener('pointerdown', move);
     persp.addEventListener('pointerleave', leave); persp.addEventListener('pointercancel', leave);
     persp.addEventListener('pointerup', e => { if (e.pointerType === 'touch') leave(); });
-    if (io && !preview) io.observe(card); else card.classList.add('vis');
   }
+  if (io && !preview) io.observe(card); else card.classList.add('vis');
   if (!preview) { const open = () => T.openViewer(w, card); card.addEventListener('click', open); card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }); }
   return { persp, card };
 }
@@ -38,13 +41,15 @@ function gridLoop(now) {
     const nx = s.sx, ny = s.sy;
     if (!s.hover && Math.abs(s.sx) < .004 && Math.abs(s.sy) < .004 && Math.abs(s.vx) < .01 && Math.abs(s.vy) < .01) {
       card.style.transform = ''; card.style.boxShadow = ''; card.classList.remove('act'); if (s.cv) s.ctx.clearRect(0, 0, s.cv.width, s.cv.height);
+      if (s.gloss) s.gloss.removeAttribute('style');
       act.delete(card); continue;
     }
     card.style.transform = `rotateX(${(-ny * 14).toFixed(2)}deg) rotateY(${(nx * 14).toFixed(2)}deg) scale(${(1 + .04 * (s.hover ? 1 : Math.abs(nx) + Math.abs(ny) > .05 ? 1 : 0)).toFixed(3)})`;
     card.style.boxShadow = `${(-nx * 18).toFixed(1)}px ${(22 - ny * 14).toFixed(1)}px 44px var(--sh2),0 0 0 1px rgba(var(--acc-rgb),.5)`;
     const int = clamp(Math.hypot(nx, ny), 0, 1) * .65 + .35;
-    T.setVars(s.shine, 50 + nx * 48, 50 + ny * 48, nx * 140 + ny * 90 + t * 9, int, 50 + nx * 40 - ny * 10, 50 + ny * 40);
+    if (s.shine) T.setVars(s.shine, 50 + nx * 48, 50 + ny * 48, nx * 140 + ny * 90 + t * 9, int, 50 + nx * 40 - ny * 10, 50 + ny * 40);
     if (s.cv) T.drawGlitter(s.ctx, s.cv, s.gl, nx, ny, int, t);
+    if (s.gloss) { const g = s.gloss.style; g.setProperty('--gx', (50 + nx * 46).toFixed(1) + '%'); g.setProperty('--gy', (50 + ny * 46).toFixed(1) + '%'); g.setProperty('--gb', (50 + nx * 60).toFixed(1) + '%'); g.setProperty('--gi', (.4 + clamp(Math.hypot(nx, ny), 0, 1) * .6).toFixed(3)); }
   }
   gridRAF = act.size ? requestAnimationFrame(gridLoop) : 0;
 }
