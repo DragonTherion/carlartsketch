@@ -1,0 +1,44 @@
+/* ===== Carta de la galería: marco TCG + foil holográfico ===== */
+@property --ang{syntax:'<angle>';inherits:true;initial-value:0deg}
+@property --sx{syntax:'<percentage>';inherits:true;initial-value:50%}
+@property --sy{syntax:'<percentage>';inherits:true;initial-value:50%}
+@property --bx{syntax:'<percentage>';inherits:true;initial-value:50%}
+@property --by{syntax:'<percentage>';inherits:true;initial-value:50%}
+@property --int{syntax:'<number>';inherits:true;initial-value:.45}
+
+/* la carta es un objeto físico: sus colores no cambian con el tema claro/oscuro */
+.card,.layer,.fwin{--card:#121214;--card2:#242428;--cdim:#a2a2a8}
+.persp{width:100%;perspective:900px;touch-action:pan-y}
+.card{position:relative;width:100%;aspect-ratio:5/7;border-radius:4.8%/3.43%;cursor:pointer;transform-style:flat;outline:none;
+  box-shadow:0 14px 34px var(--sh),0 0 0 1px rgba(var(--acc-rgb),.22);transition:box-shadow .35s;background:var(--card)}
+.card:focus-visible{box-shadow:0 0 0 2px var(--acc),0 14px 34px var(--sh)}
+.card:not(.prem):hover{box-shadow:0 20px 44px var(--sh2),0 0 0 1px rgba(var(--acc-rgb),.5)}
+
+/* ventana de la ilustración (coincide con el hueco del marco: 30/500 y 30/700) */
+.card .art{position:absolute;inset:4.286% 6%;border-radius:3px;overflow:hidden;background:linear-gradient(135deg,var(--card2),var(--card))}
+.art img,.fwin img{width:100%;height:100%;display:block;object-fit:cover}
+.art img.contain,.fwin img.contain{object-fit:contain;background:var(--card)}
+.art.noimg::after,.fwin.noimg::after,.layer.noimg::after{content:'SIN IMAGEN';position:absolute;inset:0;display:grid;place-items:center;letter-spacing:.3em;font-size:12px;color:var(--cdim,#a2a2a8)}
+
+/* marco metálico */
+.marco{position:absolute;inset:0;pointer-events:none}
+.marco svg{width:100%;height:100%;display:block}
+.card .rim{position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.30),inset 0 0 22px rgba(255,255,255,.10)}
+
+/* ---------- foil holográfico (se mezcla con la ilustración, no la apaga) ---------- */
+.prem .art img,.prem .fwin img{filter:saturate(1.12) contrast(1.05)}
+.shine{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.shine>*{position:absolute;inset:0}
+.shine .c{background:conic-gradient(from var(--ang) at var(--sx) var(--sy),#ff2e63,#ffb02e,#f6ff4d,#2effa5,#2ec8ff,#7a5cff,#ff3df0,#ff2e63);mix-blend-mode:overlay;opacity:calc(.28 + var(--int)*.5)}
+.shine .s{background:repeating-linear-gradient(115deg,rgba(255,0,110,.7) 0,rgba(255,196,0,.7) 3.5%,rgba(60,255,170,.7) 7%,rgba(0,190,255,.7) 10.5%,rgba(150,90,255,.7) 14%,rgba(255,0,110,.7) 17.5%);
+  background-size:320% 320%;background-position:var(--bx) var(--by);mix-blend-mode:color-dodge;opacity:calc(.04 + var(--int)*.20)}
+.shine .r{background:repeating-conic-gradient(from var(--ang) at 50% 42%,rgba(255,255,255,.12) 0 2.2deg,rgba(255,255,255,0) 2.2deg 8deg);opacity:calc(.2 + var(--int)*.4);mix-blend-mode:overlay}
+.shine .h{background:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,0) 1px 4px);opacity:.7;mix-blend-mode:overlay}
+.shine .spec{background:radial-gradient(circle at var(--sx) var(--sy),rgba(255,255,255,.78) 0,rgba(255,244,225,.30) 11%,rgba(255,255,255,0) 38%),
+  linear-gradient(105deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.16) 46%,rgba(255,255,255,.34) 50%,rgba(255,255,255,.16) 54%,rgba(255,255,255,0) 70%);
+  background-size:100% 100%,260% 100%;background-position:0 0,var(--bx) 0;opacity:calc(.08 + var(--int)*.36)}
+.shine canvas{width:100%;height:100%;display:block}
+@keyframes idleHolo{0%{--ang:0deg;--bx:20%;--by:30%;--sx:28%;--sy:34%}50%{--bx:80%;--by:70%;--sx:72%;--sy:64%}100%{--ang:360deg;--bx:20%;--by:30%;--sx:28%;--sy:34%}}
+.prem.vis:not(.act) .shine{animation:idleHolo 10s linear infinite;animation-delay:var(--dl,0s)}
+.prem .shine{--int:.5}
+@media (prefers-reduced-motion:reduce){.prem.vis:not(.act) .shine{animation:none}}

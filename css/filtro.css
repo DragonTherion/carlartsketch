@@ -1,0 +1,58 @@
+/* ===== Filtro por nodos ===== */
+.fbtn{right:62px}
+.fbtn:hover{transform:scale(1.07)}
+.fbadge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:var(--acc2);color:var(--ink);font:700 10px/17px var(--disp);text-align:center;box-shadow:0 0 0 2px var(--glass)}
+.fbadge[hidden]{display:none}
+body.shielded .fmodal{visibility:hidden}
+
+.fmodal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:14px;background:var(--veil);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fade .25s both}
+.fpanel{width:min(1060px,100%);height:min(780px,100%);display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--panel1),var(--panel2));box-shadow:0 30px 90px var(--sh2);overflow:hidden}
+.fhead{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.fhead h2{margin:0;flex:1;font-family:var(--disp);font-size:13px;letter-spacing:.2em;color:var(--acc2);text-transform:uppercase;font-weight:700}
+.fx{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--acc2);font-size:15px;cursor:pointer}
+.fx:hover{border-color:var(--acc)}
+.fscroll{flex:1;min-height:0;overflow:auto}
+.fboard{position:relative;width:max(100%,960px);height:max(100%,560px);background-image:radial-gradient(rgba(var(--acc-rgb),.25) 1px,transparent 1px);background-size:22px 22px}
+.fedges{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.fedge{fill:none;stroke:rgba(var(--acc-rgb),.55);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:7 7;transition:stroke .15s,stroke-width .15s}
+.fedge.on{stroke:var(--acc2);stroke-width:2.8;stroke-dasharray:9 7;animation:fflow 1s linear infinite}
+.fedge.lit{stroke:var(--acc2);stroke-width:3.2}
+.fedge.cut{stroke:var(--err);stroke-dasharray:none;animation:none}
+.fedge.tmp{stroke:var(--acc2);stroke-dasharray:3 6;animation:none}
+.fedge.tmp.snapped{stroke-dasharray:none;stroke-width:3.4}
+@keyframes fflow{to{stroke-dashoffset:-16}}
+.fhit{fill:none;stroke:transparent;stroke-width:18;pointer-events:stroke;cursor:pointer}
+.fboard.wiring .fhit{pointer-events:none}
+
+/* ficha-nodo: dos puntos de conexión, uno en cada extremo */
+.fnode{position:absolute;display:grid;grid-template-columns:1fr auto;grid-template-areas:"k n" "l n" "s n";align-items:center;column-gap:12px;min-width:150px;max-width:260px;padding:8px 14px 8px 16px;
+  border:1px solid rgba(var(--acc-rgb),.55);border-radius:10px;background:linear-gradient(180deg,var(--field),var(--panel2));color:var(--txt);cursor:grab;touch-action:none;user-select:none;
+  box-shadow:0 1px 2px var(--sh),0 6px 14px -8px var(--sh2);transition:box-shadow .2s,border-color .2s,background .2s,transform .2s}
+.fnode:hover{border-color:var(--acc2);transform:translateY(-1px)}
+.fnode>span,.fnode>b{pointer-events:none;white-space:nowrap}
+.fk{grid-area:k;font:600 8.5px/1 var(--disp);letter-spacing:.22em;color:var(--dim)}
+.fl{grid-area:l;font:600 12px/1.25 var(--disp);letter-spacing:.1em;margin-top:3px}
+.fl:empty{display:none}
+.fs{grid-area:s;font:500 11.5px/1.25 var(--disp);letter-spacing:.04em;margin-top:2px}
+.fs:empty{display:none}
+.fnode.t-paper .fs,.fnode.t-year .fs{margin-top:3px;font-size:12px;letter-spacing:.06em;font-weight:600}
+.fn{grid-area:n;min-width:24px;height:24px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font:700 11px/1 var(--disp);background:rgba(var(--acc-rgb),.16);color:var(--acc2)}
+.fnode.on{background:linear-gradient(180deg,var(--acc2),var(--acc));border-color:var(--acc2);color:var(--ink);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.22),0 10px 22px -8px var(--sh2)}
+.fnode.on .fk{color:inherit;opacity:.7}
+.fnode.on .fn{background:var(--ink);color:var(--acc2)}
+.fnode.drag{cursor:grabbing;z-index:6;transform:scale(1.04);box-shadow:0 16px 28px -8px var(--sh2)}
+.fnode.linking{z-index:5}
+
+.fport{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0;border-radius:50%;border:2px solid var(--acc2);background:var(--panel1);cursor:crosshair;touch-action:none;z-index:2;transition:transform .18s,background .18s,box-shadow .18s}
+.fport.l{left:-7px}.fport.r{right:-7px}
+.fport::before{content:'';position:absolute;inset:-10px}
+.fnode.on .fport{background:var(--ink);border-color:var(--ink)}
+.fport.used{background:var(--acc2)}
+.fport:hover{transform:scale(1.35)}
+.fboard.wiring .fport{box-shadow:0 0 0 4px rgba(var(--acc-rgb),.18)}
+.fport.snap{transform:scale(1.7);background:var(--acc2);box-shadow:0 0 0 6px rgba(var(--acc-rgb),.3)}
+.fpick{position:absolute;z-index:8;min-width:210px;max-width:380px;padding:12px;border-radius:11px;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel1),var(--panel2));box-shadow:0 18px 44px var(--sh2)}
+.ffoot{display:flex;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.ffoot .legend{margin-right:auto;font-size:12px;color:var(--dim);letter-spacing:.04em}
+@media (max-width:640px){.fmodal{padding:0}.fpanel{border-radius:0;border:0}}
+@media (prefers-reduced-motion:reduce){.fedge.on{animation:none}}

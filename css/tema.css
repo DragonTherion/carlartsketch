@@ -1,0 +1,13 @@
+/* ===== Tema claro / oscuro: variables (claro por defecto) ===== */
+:root,:root[data-theme=light]{color-scheme:light;--ink:#f2f2f3;--txt:#2a2a2d;--dim:#66666b;--acc:#4a4a50;--acc2:#0f0f11;--acc-rgb:60,60,66;--line:rgba(0,0,0,.16);
+  --glass:rgba(247,247,248,.9);--veil:rgba(238,238,240,.93);--panel1:#ffffff;--panel2:#f0f0f2;--field:#fafafb;--trk:#cfcfd4;--card:#d8d8dc;--card2:#ececef;
+  --sh:rgba(0,0,0,.24);--sh2:rgba(0,0,0,.34);--err:#a8321f;--mk1:#6a6a70;--mk2:#1c1c1f;
+  --page:radial-gradient(ellipse 80% 45% at 50% 105%,rgba(0,0,0,.07),rgba(0,0,0,0) 70%),radial-gradient(ellipse 70% 40% at 50% -5%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%),linear-gradient(#f5f5f6,#ebebed 55%,#dededf)}
+:root[data-theme=dark]{color-scheme:dark;--ink:#0b0b0c;--txt:#e4e4e7;--dim:#97979d;--acc:#c6c6cc;--acc2:#f5f5f7;--acc-rgb:198,198,204;--line:rgba(255,255,255,.18);
+  --glass:rgba(14,14,16,.9);--veil:rgba(8,8,10,.92);--panel1:#18181b;--panel2:#0f0f11;--field:#09090a;--trk:#34343a;--card:#101012;--card2:#202024;
+  --sh:rgba(0,0,0,.55);--sh2:rgba(0,0,0,.65);--err:#ff9a8a;--mk1:#f2f2f4;--mk2:#8a8a90;
+  --page:radial-gradient(ellipse 80% 45% at 50% 105%,rgba(255,255,255,.08),rgba(255,255,255,0) 70%),radial-gradient(ellipse 70% 40% at 50% -5%,rgba(255,255,255,.06),rgba(255,255,255,0) 70%),linear-gradient(#0a0a0b,#101012 55%,#18181b)}
+
+/* Tipografía tipo Century Gothic (Questrial se descarga como respaldo) */
+:root{--disp:'Century Gothic','CenturyGothic','Apple Gothic','URW Gothic','URW Gothic L','Avant Garde','Questrial','Futura','Trebuchet MS','Segoe UI',sans-serif;--body:var(--disp)}
+html{background:var(--ink)}

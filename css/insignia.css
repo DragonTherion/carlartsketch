@@ -1,0 +1,16 @@
+/* ===== Insignia CAS (esquina superior derecha de cada carta). Cambia estos 3 colores para recolorearla. ===== */
+.cas{--cas-ink:#f4f4f6;--cas-acc:#c8c8ce;--cas-sub:#d9d9de;
+  position:absolute;top:1.1%;right:1.8%;width:13.5%;aspect-ratio:1;z-index:3;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.cas svg{display:block;width:100%;height:100%;overflow:visible}
+.cas-bg{fill:rgba(18,18,21,.66);stroke:rgba(255,255,255,.3);stroke-width:2.5}
+.cas-t{fill:var(--cas-sub);font-family:Helvetica,Arial,sans-serif;font-weight:600}
+.cas-dot{fill:var(--cas-acc)}
+.cas-aro{fill:none;stroke:var(--cas-ink);stroke-width:2.6}
+.cas-aro2{fill:none;stroke:var(--cas-acc);stroke-width:2.2;stroke-dasharray:5 5}
+.cas-l{fill:var(--cas-ink);font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:500}
+.cas-ln{stroke:var(--cas-acc);stroke-width:2.2}
+.cas-s{fill:var(--cas-sub);font-family:Helvetica,Arial,sans-serif;font-weight:600}
+
+/* insignia dorada */
+.cas.oro{--cas-ink:#fff1c2;--cas-acc:#e3b94a;--cas-sub:#f0d58a;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5)) drop-shadow(0 0 5px rgba(227,185,74,.35))}
+.cas.oro .cas-bg{fill:rgba(30,22,5,.74);stroke:rgba(232,194,92,.75)}

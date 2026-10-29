@@ -1,0 +1,58 @@
+/* ===== Visor: carta grande en 3D (frente, canto y reverso) ===== */
+.viewer{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--veil);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fade .35s both;overflow:auto;cursor:zoom-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.vclose{position:fixed;top:14px;right:16px;z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);color:var(--acc2);font-size:18px;cursor:pointer}
+.vwrap{position:relative;display:flex;flex-direction:column;align-items:center;padding:26px 18px;max-width:100%}
+.vshadow{position:absolute;left:50%;top:0;width:calc(var(--VH)*5/7*.9);height:calc(var(--VH)*.9);margin-left:calc(var(--VH)*5/7*-.45);background:#000;border-radius:24px;filter:blur(calc(var(--VH)*.035));will-change:transform,opacity;pointer-events:none}
+.vstage{--VH:min(72vh,120vw);--R:calc(var(--VH)*.0343);position:relative;width:calc(var(--VH)*5/7);height:var(--VH);perspective:calc(var(--VH)*1.7);cursor:grab}
+.vt,.vf{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;will-change:transform}
+.vslice{position:absolute;inset:0;border-radius:var(--R)}
+.vface{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;border-radius:var(--R);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+
+/* cada cara es UN solo plano: ilustración + marco + foil van pegados */
+.layer{position:absolute;inset:0;border-radius:var(--R);overflow:hidden;pointer-events:none;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card)}
+.layer.shine{background:none;transform:none;will-change:auto;-webkit-backface-visibility:visible;backface-visibility:visible}
+.fwin{position:absolute;inset:4.286% 6%;border-radius:calc(var(--R)*.22);overflow:hidden;background:#0a0a0c}
+.viewer .marco{position:absolute;inset:0;pointer-events:none}
+.vedge{position:absolute;inset:0;border-radius:var(--R);pointer-events:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4),inset 0 0 calc(var(--VH)*.04) rgba(255,255,255,.16)}
+
+/* reverso: materiales */
+.bback{background:radial-gradient(ellipse at 50% 45%,#4a4a50,#2a2a2e 60%,#0f0f11)}
+.bback::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 1px,transparent 1px 22px),repeating-linear-gradient(-45deg,rgba(255,255,255,.08) 0 1px,transparent 1px 22px)}
+.bback::after{content:'';position:absolute;inset:calc(var(--VH)*.022);border-radius:calc(var(--R)*.7);box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),inset 0 0 0 5px rgba(0,0,0,.4),inset 0 0 0 6px rgba(255,255,255,.25)}
+.bwin{background:none;display:flex;flex-direction:column;align-items:center;padding:calc(var(--VH)*.06) calc(var(--VH)*.05) calc(var(--VH)*.05);text-align:center}
+.bwin small{font-family:var(--disp);letter-spacing:.34em;font-size:calc(var(--VH)*.017);color:#cfcfd5;margin-bottom:calc(var(--VH)*.012)}
+.bwin h4{font-family:var(--disp);font-weight:700;letter-spacing:.14em;font-size:calc(var(--VH)*.028);color:#fff;text-transform:uppercase;line-height:1.25}
+.bwin .ficha{flex:1;width:100%;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:calc(var(--VH)*.014);margin:calc(var(--VH)*.008) 0;overflow:hidden}
+.finfo{position:relative;width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:calc(var(--VH)*.014);padding:calc(var(--VH)*.02) calc(var(--VH)*.008) calc(var(--VH)*.008);text-align:left;
+  border:1px solid rgba(255,255,255,.55);border-radius:calc(var(--VH)*.012);background:linear-gradient(180deg,rgba(0,0,0,.34),rgba(0,0,0,.2));
+  box-shadow:inset 0 0 0 calc(var(--VH)*.0035) rgba(0,0,0,.35),inset 0 0 0 calc(var(--VH)*.0042) rgba(255,255,255,.2),0 calc(var(--VH)*.004) calc(var(--VH)*.01) rgba(0,0,0,.4)}
+.finfo::before{content:'DATOS DEL ARCHIVO';position:absolute;left:50%;top:0;transform:translate(-50%,-52%);padding:calc(var(--VH)*.003) calc(var(--VH)*.014);border:1px solid rgba(255,255,255,.55);border-radius:99px;background:#26262a;
+  font-family:var(--disp);font-size:calc(var(--VH)*.0092);letter-spacing:.26em;color:#e4e4e8;white-space:nowrap}
+.finfo>div{padding:calc(var(--VH)*.005) calc(var(--VH)*.01)}
+.finfo>div:nth-child(1){border-bottom:1px dashed rgba(255,255,255,.28)}
+.finfo>div:nth-child(3),.finfo>div:nth-child(4){border-left:1px dashed rgba(255,255,255,.28)}
+.finfo>div:nth-child(5){border-top:1px dashed rgba(255,255,255,.28)}
+.finfo>div{min-width:0}.finfo .w3{grid-column:1/-1}
+.finfo b{display:block;font-family:var(--disp);font-weight:400;font-size:calc(var(--VH)*.0098);letter-spacing:.22em;color:#a3a3ab;margin-bottom:calc(var(--VH)*.003)}
+.finfo span{display:block;font-family:var(--disp);font-size:calc(var(--VH)*.0128);letter-spacing:.04em;color:#f0f0f3;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.finfo .w3:last-child span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.pal{display:flex;width:100%;height:var(--ph,14px);border-radius:999px;overflow:hidden;box-shadow:0 0 0 1.5px rgba(255,255,255,.65),0 0 0 3px rgba(0,0,0,.45);position:relative}
+.pal i{display:block;min-width:0}
+.pal::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 55%,rgba(0,0,0,.18));pointer-events:none}
+.bwin .pal{--ph:calc(var(--VH)*.034);width:92%;margin:0 auto}
+.frow b{display:block;font-family:var(--disp);font-weight:400;font-size:calc(var(--VH)*.0135);letter-spacing:.3em;color:#cfcfd5;margin-bottom:calc(var(--VH)*.011)}
+.fchips{display:flex;flex-wrap:wrap;justify-content:center;gap:calc(var(--VH)*.008)}
+.bwin .nomat{display:grid;place-items:center;font-family:var(--disp);letter-spacing:.26em;font-size:calc(var(--VH)*.017);color:#9a9aa0;line-height:2;text-align:center}
+.bwin p{font-size:calc(var(--VH)*.022);color:#d4d4d9;font-style:normal;line-height:1.3;max-height:calc(var(--VH)*.11);overflow:hidden}
+
+/* pie del visor */
+.vcap{margin-top:30px;text-align:center;max-width:560px;cursor:default}
+.vcap h2{font-family:var(--disp);font-size:clamp(15px,2.3vw,20px);letter-spacing:.14em;color:var(--acc2);text-transform:uppercase}
+.vcap p{margin-top:8px;color:var(--dim);font-size:14px}
+
+/* reflejo satinado de las cartas sin foil: mancha especular + banda de luz que siguen la inclinación */
+.gloss{--gx:50%;--gy:50%;--gb:50%;--gi:.4;position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,calc(var(--gi)*.55)) 0,rgba(255,255,255,calc(var(--gi)*.2)) 14%,rgba(255,255,255,0) 42%),
+    linear-gradient(108deg,rgba(255,255,255,0) 32%,rgba(255,255,255,calc(var(--gi)*.12)) 46%,rgba(255,255,255,calc(var(--gi)*.24)) 50%,rgba(255,255,255,calc(var(--gi)*.12)) 54%,rgba(255,255,255,0) 68%);
+  background-size:100% 100%,280% 100%;background-position:0 0,var(--gb) 0;background-repeat:no-repeat;mix-blend-mode:screen}

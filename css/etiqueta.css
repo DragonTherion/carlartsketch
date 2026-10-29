@@ -1,0 +1,39 @@
+/* ===== Etiqueta tipo "tag" (forma dibujada por js/etiqueta.js) ===== */
+.tg{--tg-fill:#ffffff;--tg-fill2:#e8e8ec;--tg-stroke:rgba(24,24,28,.9);--tg-ink:#1b1b1e;
+  position:relative;display:inline-flex;max-width:100%;vertical-align:middle;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.22));transition:transform .15s,filter .15s}
+.tg-bg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tg-in{position:relative;z-index:1;min-width:0;padding:.62em 4em .62em 1.05em;font-family:var(--disp);letter-spacing:.09em;line-height:1.3;color:var(--tg-ink);text-align:left}
+.tg-ck{position:absolute;z-index:1;right:.75em;top:50%;width:1.25em;height:1.25em;margin-top:-.62em;color:var(--tg-ink);opacity:0;transform:scale(.4);transition:opacity .18s,transform .18s}
+.tg-ck svg{display:block;width:100%;height:100%}
+
+/* editor: se pulsan para activar (apagada = tono del panel; activa = invertida) */
+.chip{--tg-fill:var(--field);--tg-fill2:var(--panel2);--tg-stroke:rgba(var(--acc-rgb),.7);--tg-ink:var(--txt);
+  border:0;padding:0;margin:0;font-family:var(--disp);font-size:10px;cursor:pointer;background:none;filter:drop-shadow(0 1px 1.5px var(--sh))}
+.chip:hover{--tg-stroke:var(--acc2);transform:translateY(-1px)}
+.chip:focus-visible{outline:none;--tg-stroke:var(--acc2);filter:drop-shadow(0 0 3px rgba(var(--acc-rgb),.9))}
+.chip.on{--tg-fill:var(--acc2);--tg-fill2:var(--acc);--tg-stroke:var(--acc2);--tg-ink:var(--ink)}
+.chip.on .tg-ck{opacity:1;transform:none}
+
+/* reverso de la carta: etiqueta de colgar (papel metálico, puntada interior, ojal y leve inclinación) */
+.fchip{--tg-fill:#ffffff;--tg-fill2:#cfcfd6;--tg-stroke:rgba(10,10,12,.95);--tg-ink:#141417;
+  font-size:calc(var(--VH)*.0145);filter:drop-shadow(0 calc(var(--VH)*.003) calc(var(--VH)*.004) rgba(0,0,0,.55));transform:rotate(-1.1deg)}
+.fchips .fchip:nth-child(even){transform:rotate(1deg)}
+.fchip .tg-in{font-weight:700;padding-right:4.6em;text-shadow:0 1px 0 rgba(255,255,255,.9)}
+.fchip .tg-st{stroke:rgba(0,0,0,.42);stroke-width:1;stroke-dasharray:3 2.2}
+.fchip .tg-ey{fill:#2a2a2e;stroke:rgba(0,0,0,.9);stroke-width:1}
+.fchip .tg-ey2{fill:none;stroke:rgba(255,255,255,.95);stroke-width:1.4}
+
+/* reverso: placa tipo boleto (muescas laterales, doble filete y rombos) */
+.fplate{--tg-fill:#ffffff;--tg-fill2:#c4c4cc;font-size:calc(var(--VH)*.0158);transform:none!important;filter:drop-shadow(0 calc(var(--VH)*.003) calc(var(--VH)*.005) rgba(0,0,0,.6))}
+.fplate .tg-in{padding:.72em 2.4em;text-align:center;font-weight:700;letter-spacing:.1em;text-shadow:0 1px 0 rgba(255,255,255,.9)}
+.fplate .tg-ln{stroke:rgba(0,0,0,.45);stroke-width:1}
+.fplate .tg-dm{fill:#141417}
+
+/* editor y selectores: la misma placa tipo boleto; apagada = tono del panel, activa = invertida con visto */
+.chip.plate{font-size:11.5px;filter:drop-shadow(0 1px 2px var(--sh))}
+.chip.plate .tg-in{padding:.8em 2.7em;text-align:center;font-weight:600}
+.chip.plate .tg-ln{stroke:rgba(var(--acc-rgb),.45);stroke-width:1}
+.chip.plate .tg-dm{fill:var(--tg-ink);opacity:.8}
+.chip.plate.on .tg-dm{opacity:0}
+.chip.plate .tg-ck{right:.7em;width:1.3em;height:1.3em;margin-top:-.65em}
+.chip.plate:hover{transform:translateY(-1px)}

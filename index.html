@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f3" id="metaTheme">
+<meta name="robots" content="index,follow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="icon" href="assets/icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&family=Cormorant+Garamond:wght@500&display=swap">
+<title>Carl Art Sketches · Galería</title>
+<script src="js/tema-inicial.js"></script>
+<link rel="stylesheet" href="css/tema.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/carta.css">
+<link rel="stylesheet" href="css/visor.css">
+<link rel="stylesheet" href="css/etiqueta.css">
+<link rel="stylesheet" href="css/insignia.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/filtro.css">
+<link rel="stylesheet" href="css/proteccion.css">
+</head>
+<body>
+
+<!-- Definiciones compartidas del marco (mismo diseño que el reverso de la carta) -->
+<svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true" focusable="false"><defs>
+  <radialGradient id="tf_bg" cx=".5" cy=".45" r=".75"><stop offset="0" stop-color="#4a4a50"/><stop offset=".6" stop-color="#2a2a2e"/><stop offset="1" stop-color="#0f0f11"/></radialGradient>
+  <pattern id="tf_x" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 .5H22M.5 0V22" stroke="#fff" stroke-opacity=".08" stroke-width="1"/></pattern>
+</defs></svg>
+
+<canvas id="embers"></canvas>
+
+<div id="app">
+  <header class="hero">
+    <h1 id="siteTitle"></h1>
+    <p id="siteSub"></p>
+    <div class="orn"><i></i><b></b><i></i></div>
+  </header>
+  <main id="grid"></main>
+  <footer>© <span id="yr"></span> · Todos los derechos reservados</footer>
+</div>
+
+<div id="shield">CONTENIDO PROTEGIDO</div>
+
+<button id="themeBtn" class="tbtn" type="button" aria-label="Cambiar tema" title="Cambiar tema">
+  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+</button>
+
+<button id="filterBtn" class="tbtn fbtn" type="button" aria-label="Filtrar por nodos" title="Filtrar por nodos">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6.500" r="2.600"/><circle cx="18" cy="9" r="2.600"/><circle cx="9.500" cy="18" r="2.600"/><path d="M8.500 7.100l6.900 1.300M7.300 8.900l1.500 6.700M16.500 11.300l-5 4.500"/></svg>
+  <span class="fbadge" hidden></span>
+</button>
+
+<!-- Scripts (orden importante) -->
+<script src="js/util.js" defer></script>
+<script src="js/hash.js" defer></script>
+<script src="js/datos.js" defer></script>
+<script src="js/efectos.js" defer></script>
+<script src="js/etiqueta.js" defer></script>
+<script src="js/paleta.js" defer></script>
+<script src="js/insignia.js" defer></script>
+<script src="js/info.js" defer></script>
+<script src="js/exportar.js" defer></script>
+<script src="js/titulo.js" defer></script>
+<script src="js/galeria.js" defer></script>
+<script src="js/filtro.js" defer></script>
+<script src="js/visor.js" defer></script>
+<script src="js/admin.js" defer></script>
+<script src="js/proteccion.js" defer></script>
+<script src="js/ambiente.js" defer></script>
+<script src="js/parallax.js" defer></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

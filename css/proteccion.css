@@ -1,0 +1,5 @@
+/* ===== Disuasión de capturas / impresión ===== */
+#shield{position:fixed;inset:0;z-index:999;display:none;place-items:center;background:#000;color:#888;font-family:var(--disp);letter-spacing:.4em;font-size:13px;text-align:center}
+body.shielded #shield{display:grid}
+body.shielded #app,body.shielded .viewer,body.shielded .abar,body.shielded .pop,body.shielded .fmodal,body.shielded .modalbg,body.shielded #embers,body.shielded .tbtn{visibility:hidden}
+@media print{html,body{display:none!important}}

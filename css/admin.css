@@ -1,0 +1,101 @@
+/* ===== Modo administrador: barra, botones, formularios y ventanas ===== */
+.abar{position:fixed;top:0;left:0;right:0;z-index:40;height:54px;display:flex;align-items:center;gap:10px;padding:0 calc(clamp(10px,2vw,22px) + 104px) 0 clamp(10px,2vw,22px);overflow-x:auto;scrollbar-width:none;
+  background:var(--glass);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);box-shadow:0 8px 30px var(--sh)}
+.abar::-webkit-scrollbar{display:none}
+.abar .lbl{font-family:var(--disp);font-size:11px;letter-spacing:.3em;color:var(--acc);margin-right:auto;white-space:nowrap}
+.abar .lbl i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc2);box-shadow:0 0 10px var(--acc);margin-right:10px}
+.abar .lbl em{font-style:normal}
+.abar .btn{flex:0 0 auto}
+.abar .sep{flex:0 0 1px;height:24px;background:var(--line)}
+
+.btn{white-space:nowrap;font-family:var(--disp);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:.75em 1.3em;border-radius:6px;border:1px solid var(--line);background:rgba(var(--acc-rgb),.07);color:var(--acc2);cursor:pointer;transition:.2s}
+.btn:hover{background:rgba(var(--acc-rgb),.18);border-color:var(--acc)}
+.btn.main{background:var(--acc2);color:var(--ink);border-color:var(--acc2);font-weight:700}
+.btn.main:hover{filter:brightness(1.15)}
+.btn.danger{border-color:rgba(var(--acc-rgb),.45);color:var(--err)}
+.btn.danger.arm{background:var(--err);color:#fff;border-color:var(--err)}
+.btn.mini{margin-top:10px;padding:.55em 1.1em;font-size:10px}
+.btn:disabled{opacity:.5;cursor:wait}
+.btn.pend::after{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc2);margin-left:.7em;vertical-align:middle;box-shadow:0 0 0 2px rgba(var(--acc-rgb),.3)}
+
+/* botones con icono (RESPALDO / RESTAURACIÓN) */
+.ibtn{display:inline-flex;align-items:center;gap:.7em;padding:.62em 1em}
+.ibtn svg{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ibtn em{font-style:normal}
+.ibtn.only{gap:.3em;padding:.62em .75em}
+.ibtn.only svg:last-child{width:12px;height:12px;flex:0 0 12px;opacity:.7;transition:transform .2s}
+.ibtn.only[aria-expanded=true]{background:rgba(var(--acc-rgb),.18);border-color:var(--acc)}
+.ibtn.only[aria-expanded=true] svg:last-child{transform:rotate(180deg)}
+.pop{position:fixed;z-index:60;min-width:270px;padding:6px;border-radius:11px;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel1),var(--panel2));box-shadow:0 20px 50px var(--sh2);animation:popIn .16s ease-out both}
+@keyframes popIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.pop button{display:flex;align-items:center;gap:13px;width:100%;text-align:left;padding:.8em 1em;border:0;border-radius:7px;background:none;color:var(--txt);font:inherit;cursor:pointer}
+.pop button:hover,.pop button:focus-visible{background:rgba(var(--acc-rgb),.13);outline:none}
+.pop svg{width:20px;height:20px;flex:0 0 20px;fill:none;stroke:var(--acc2);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pop strong{display:block;font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--acc2)}
+.pop small{display:block;margin-top:3px;font-size:12px;color:var(--dim)}
+
+.modalbg{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:var(--veil);backdrop-filter:blur(6px);animation:fade .25s both;overflow:auto}
+.modal{width:min(100%,var(--mw,440px));background:linear-gradient(180deg,var(--panel1),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:26px 26px 22px;box-shadow:0 30px 90px var(--sh2);margin:auto}
+.modal h2{font-family:var(--disp);font-size:13px;letter-spacing:.2em;color:var(--acc2);text-transform:uppercase;margin-bottom:18px;font-weight:700}
+.modal .row{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.modal .row .sp{margin-right:auto}
+.fld{margin-bottom:15px}
+.fld label{display:block;font-family:var(--disp);font-size:10px;letter-spacing:.26em;color:var(--acc);margin-bottom:7px}
+.fld input[type=text],.fld input[type=password],.fld textarea,.fld select{width:100%;padding:.8em .95em;border-radius:7px;border:1px solid rgba(var(--acc-rgb),.3);background:var(--field);color:var(--txt);font:inherit;font-size:16px;outline:none}
+.fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.13)}
+.fld textarea{resize:vertical;min-height:70px}
+.fld .inl{display:flex;gap:8px}.fld .inl .btn{white-space:nowrap;padding:0 1em}
+.msg{min-height:1.3em;color:var(--err);font-size:14px;margin-top:4px}
+.msg.ok{color:var(--acc)}
+.note{font-size:13.5px;color:var(--dim);line-height:1.5;margin-bottom:14px}
+.chk{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--txt);cursor:pointer;margin-top:6px}
+.chk input{width:17px;height:17px;accent-color:var(--acc2)}
+.sw{display:flex;align-items:center;gap:14px;cursor:pointer;padding:12px 14px;border:1px solid rgba(var(--acc-rgb),.25);border-radius:9px;background:var(--field)}
+.sw input{display:none}
+.sw .tr{position:relative;flex:0 0 46px;height:26px;border-radius:99px;background:var(--trk);transition:.25s}
+.sw .tr::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#8e8e94;transition:.25s}
+.sw input:checked+.tr{background:linear-gradient(90deg,#ff2e63,#ffb02e,#2effa5,#2ec8ff,#7a5cff)}
+.sw input:checked+.tr::after{left:23px;background:#fff;box-shadow:0 0 10px #fff}
+.sw span.t{font-family:var(--disp);font-size:11.5px;letter-spacing:.2em;color:var(--acc2)}
+.edgrid{display:grid;grid-template-columns:1fr 210px;gap:26px}
+@media (max-width:720px){.edgrid{grid-template-columns:1fr}.pvcol{order:-1}}
+.pvcol{display:flex;flex-direction:column;align-items:center}
+.pvbox{width:190px}
+.pvcol small{margin-top:12px;font-family:var(--disp);font-size:9.5px;letter-spacing:.26em;color:var(--dim);text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.palprev .pal{--ph:16px;width:100%}
+.palempty{font-size:12px;color:var(--dim);letter-spacing:.1em;padding:.4em 0}
+.stat{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 14px}
+.stat span{font-family:var(--disp);font-size:11px;letter-spacing:.16em;color:var(--acc2);padding:.55em .9em;border:1px solid var(--line);border-radius:6px;background:var(--field)}
+@media (max-width:760px){.abar .lbl em,.ibtn em{display:none}.abar .btn{padding:.7em .9em;font-size:10px;letter-spacing:.12em}.ibtn{padding:.62em .75em}}
+
+/* pestañas del editor */
+.tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.tab{position:relative;top:1px;padding:.75em 1.3em;border:1px solid transparent;border-bottom:0;border-radius:8px 8px 0 0;background:none;color:var(--dim);font-family:var(--disp);font-size:11px;letter-spacing:.24em;cursor:pointer;transition:color .15s,background .15s}
+.tab:hover{color:var(--acc2)}
+.tab.on{color:var(--acc2);font-weight:700;background:var(--field);border-color:var(--line)}
+.tab:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.tabp[hidden]{display:none}
+
+/* filas de dos campos en el editor */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start}
+.row2.r-ty{grid-template-columns:1fr 130px}
+.row2 .sw{padding:9px 12px;gap:10px;min-height:44px}.row2 .sw span.t{font-size:10px;letter-spacing:.14em;line-height:1.3}.row2 .sw .tr{flex-basis:42px}
+.row2 select{text-overflow:ellipsis}
+@media (max-width:520px){.row2{grid-template-columns:1fr}.row2.r-ty{grid-template-columns:1fr 100px}}
+
+/* el interruptor es un <label> dentro de .fld: que no herede el estilo de las etiquetas de campo */
+.fld label.sw{display:flex;margin:0;font-size:inherit;letter-spacing:normal;color:inherit}
+
+/* selector de insignia (dos íconos) */
+.insgs{display:flex;gap:10px}
+.insg{position:relative;width:62px;height:62px;padding:0;border-radius:10px;border:1px solid rgba(var(--acc-rgb),.3);background:#2a2a2e;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s}
+.insg:hover{transform:translateY(-1px);border-color:var(--acc2)}
+.insg.on{border-color:var(--acc2);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.25)}
+.insg:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.insg .cas{position:absolute;inset:3px;width:auto;aspect-ratio:auto;top:3px;right:3px;filter:none}
+.insg.on::after{content:'✓';position:absolute;right:-6px;top:-6px;width:18px;height:18px;border-radius:50%;background:var(--acc2);color:var(--ink);font-size:11px;line-height:18px;text-align:center}
+/* las dos pestañas ocupan el mismo espacio: el modal no cambia de altura al cambiar de pestaña */
+.tabstack{display:grid}
+.tabstack>.tabp{grid-area:1/1;min-width:0}
+.tabstack>.tabp.off{visibility:hidden;pointer-events:none}
