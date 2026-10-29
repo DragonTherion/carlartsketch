@@ -25,6 +25,14 @@
 .marco svg{width:100%;height:100%;display:block}
 .card .rim{position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.30),inset 0 0 22px rgba(255,255,255,.10)}
 
+/* reflejo satinado de las cartas sin foil (galería y visor): mancha especular + banda de luz
+   que siguen la inclinación de la carta */
+.gloss{--gx:50%;--gy:50%;--gb:50%;--gi:.4;position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,calc(var(--gi)*.55)) 0,rgba(255,255,255,calc(var(--gi)*.2)) 14%,rgba(255,255,255,0) 42%),
+    linear-gradient(108deg,rgba(255,255,255,0) 32%,rgba(255,255,255,calc(var(--gi)*.12)) 46%,rgba(255,255,255,calc(var(--gi)*.24)) 50%,rgba(255,255,255,calc(var(--gi)*.12)) 54%,rgba(255,255,255,0) 68%);
+  background-size:100% 100%,280% 100%;background-position:0 0,var(--gb) 0;background-repeat:no-repeat;mix-blend-mode:screen}
+.card>.gloss{z-index:2}
+
 /* ---------- foil holográfico (se mezcla con la ilustración, no la apaga) ---------- */
 .prem .art img,.prem .fwin img{filter:saturate(1.12) contrast(1.05)}
 .shine{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}

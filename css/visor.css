@@ -50,9 +50,3 @@
 .vcap{margin-top:30px;text-align:center;max-width:560px;cursor:default}
 .vcap h2{font-family:var(--disp);font-size:clamp(15px,2.3vw,20px);letter-spacing:.14em;color:var(--acc2);text-transform:uppercase}
 .vcap p{margin-top:8px;color:var(--dim);font-size:14px}
-
-/* reflejo satinado de las cartas sin foil: mancha especular + banda de luz que siguen la inclinación */
-.gloss{--gx:50%;--gy:50%;--gb:50%;--gi:.4;position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,calc(var(--gi)*.55)) 0,rgba(255,255,255,calc(var(--gi)*.2)) 14%,rgba(255,255,255,0) 42%),
-    linear-gradient(108deg,rgba(255,255,255,0) 32%,rgba(255,255,255,calc(var(--gi)*.12)) 46%,rgba(255,255,255,calc(var(--gi)*.24)) 50%,rgba(255,255,255,calc(var(--gi)*.12)) 54%,rgba(255,255,255,0) 68%);
-  background-size:100% 100%,280% 100%;background-position:0 0,var(--gb) 0;background-repeat:no-repeat;mix-blend-mode:screen}
